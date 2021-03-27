@@ -20,7 +20,7 @@ router.use(express.urlencoded({ extended: false }))
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
-        console.log('post user: ', req.body, user, err, info)
+        console.log('Login: ', req.body, user, err, info)
         if (err) return next(err)
         if (user) {
             const token = jwt.sign(user, db.SECRET)
@@ -28,14 +28,13 @@ router.post('/login', (req, res, next) => {
         } else
             return res.status(422).json(info)
     })(req, res, next)
-
 })
  
 /* GET user profile. */
 router.get('/profile',
     passport.authenticate('jwt', { session: false }),
-    (req, res, next) => {
-        res.send("Profile pages")
+    (req, res, next) => { 
+        res.send( req.user)
     });
 
 router.post('/register',
@@ -57,10 +56,8 @@ router.post('/register',
 
 
 router.get('/', (req, res, next) => {
-    res.send('respond with a resource');
+    res.send('Respond without authentication');
 });
-
-
 
 // Error Handler
 app.use((err, req, res, next) => {
