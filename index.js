@@ -23,7 +23,9 @@ router.post('/login', (req, res, next) => {
         console.log('Login: ', req.body, user, err, info)
         if (err) return next(err)
         if (user) {
-            const token = jwt.sign(user, db.SECRET)
+            const token = jwt.sign(user, db.SECRET,{
+                expiresIn: '1d'
+              })
             return res.json({ user, token })
         } else
             return res.status(422).json(info)
