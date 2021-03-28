@@ -16,7 +16,7 @@ const router = require('express').Router(),
     jwt = require('jsonwebtoken')
 
 
-app.use(cors({ origin: 'http://localhost:3000' }));    
+app.use(cors({ origin: 'http://localhost:3000' }))    
 
 app.use('/api', router)
 router.use(express.json())
